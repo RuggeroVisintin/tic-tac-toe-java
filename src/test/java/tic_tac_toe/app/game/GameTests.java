@@ -28,7 +28,7 @@ class GameTests {
         void itShouldStartANewGameWithASetOfEmptyMoves() {
             String[][] result = { { "", "", "" }, { "", "", "" }, { "", "", "" } };
 
-            assertArrayEquals(game.getBoard(), result);
+            assertArrayEquals(result, game.getBoard());
         }
 
         @Test
