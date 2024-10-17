@@ -1,6 +1,7 @@
 package tic_tac_toe.app.game;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,15 +20,20 @@ class GameTests {
     class NewGameTests {
 
         @Test
-        void itShouldConstructANewGameWithAUniqueId() {
+        void itShouldStartANewGameWithAUniqueId() {
             assertNotNull(game.getId());
         }
 
         @Test
-        void itShouldStartWithASetOfEmptyMoves() {
+        void itShouldStartANewGameWithASetOfEmptyMoves() {
             String[][] result = { { "", "", "" }, { "", "", "" }, { "", "", "" } };
 
             assertArrayEquals(game.getBoard(), result);
+        }
+
+        @Test
+        void itShouldStartANewGameWithNoWinnerSet() {
+            assertEquals(-1, game.getWinner());
         }
 
     }

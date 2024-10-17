@@ -7,9 +7,12 @@ public class Game {
 
     private String[][] mBoard;
 
+    private int mWinner;
+
     public Game() {
         this.uuid = UUID.randomUUID();
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
+        this.mWinner = -1;
     }
 
     public UUID getId() {
@@ -18,5 +21,9 @@ public class Game {
 
     public String[][] getBoard() {
         return this.mBoard;
+    }
+
+    public int getWinner() {
+        return this.mWinner;
     }
 }
