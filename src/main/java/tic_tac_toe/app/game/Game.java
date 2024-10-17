@@ -22,6 +22,10 @@ public class Game {
             throw new Exception("The same player cannot move more than once in a row");
         }
 
+        if (mBoard[y - 1][x - 1] != "") {
+            throw new Exception("Cell [" + x + ", " + 2 + "] is already taken. Choose another cell");
+        }
+
         mBoard[y - 1][x - 1] = "O";
         mLastPlayerToMove = playerId;
     }

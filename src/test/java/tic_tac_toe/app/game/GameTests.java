@@ -59,5 +59,12 @@ class GameTests {
 
             assertThrows(Exception.class, () -> game.nextMove(1, 2, 1));
         }
+
+        @Test
+        void itShouldThrowIfAPlayerTargetsACellThatIsAlreadyTaken() throws Exception {
+            game.nextMove(1, 1, 1);
+
+            assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+        }
     }
 }
