@@ -37,4 +37,19 @@ class GameTests {
         }
 
     }
+
+    @Nested
+    class NextMoveTests {
+
+        @Test
+        void itShouldRegisterTheMoveInTheGameBoard() {
+            game.nextMove(1, 3, 2);
+
+            assertArrayEquals(new String[][] {
+                    { "", "", "" },
+                    { "", "", "O" },
+                    { "", "", "" }
+            }, game.getBoard());
+        }
+    }
 }

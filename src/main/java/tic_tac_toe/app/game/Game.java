@@ -15,6 +15,10 @@ public class Game {
         this.mWinner = -1;
     }
 
+    public void nextMove(int playerId, int x, int y) {
+        mBoard[y - 1][x - 1] = "O";
+    }
+
     public UUID getId() {
         return mUuid;
     }
