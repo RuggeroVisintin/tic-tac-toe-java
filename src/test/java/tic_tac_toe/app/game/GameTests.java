@@ -54,6 +54,28 @@ class GameTests {
         }
 
         @Test
+        void itShouldResisterXOnTheBoardWhenPlayer0Moves() throws Exception {
+            game.nextMove(0, 3, 2);
+
+            assertArrayEquals(new String[][] {
+                    { "", "", "" },
+                    { "", "", "X" },
+                    { "", "", "" }
+            }, game.getBoard());
+        }
+
+        @Test
+        void itShouldResisterOOnTheBoardWhenPlayer0Moves() throws Exception {
+            game.nextMove(1, 3, 2);
+
+            assertArrayEquals(new String[][] {
+                    { "", "", "" },
+                    { "", "", "O" },
+                    { "", "", "" }
+            }, game.getBoard());
+        }
+
+        @Test
         void itShouldThrowIfTheSamePlayerMovesMoreThanOnceInARow() throws Exception {
             game.nextMove(1, 1, 1);
 

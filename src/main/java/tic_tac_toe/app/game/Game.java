@@ -11,10 +11,13 @@ public class Game {
 
     private int mLastPlayerToMove;
 
+    private static String[] mPlayerSymbolsMap = { "X", "O" };
+
     public Game() {
         this.mUuid = UUID.randomUUID();
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
         this.mWinner = -1;
+        this.mLastPlayerToMove = -1;
     }
 
     public void nextMove(int playerId, int x, int y) throws Exception {
@@ -30,7 +33,7 @@ public class Game {
             throw new Exception("Cell [" + x + ", " + 2 + "] is already taken. Choose another cell");
         }
 
-        mBoard[y - 1][x - 1] = "O";
+        mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId];
         mLastPlayerToMove = playerId;
     }
 
