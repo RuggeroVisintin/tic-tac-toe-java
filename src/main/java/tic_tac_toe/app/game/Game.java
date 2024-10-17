@@ -18,6 +18,10 @@ public class Game {
     }
 
     public void nextMove(int playerId, int x, int y) throws Exception {
+        if (playerId != 0 && playerId != 1) {
+            throw new Exception("PlayerId " + playerId + " is not valid. Use either 0 or 1");
+        }
+
         if (playerId == mLastPlayerToMove) {
             throw new Exception("The same player cannot move more than once in a row");
         }

@@ -66,5 +66,10 @@ class GameTests {
 
             assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
         }
+
+        @Test
+        void itShouldThrowIfPlayerIdIsNotValid() throws Exception {
+            assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+        }
     }
 }
