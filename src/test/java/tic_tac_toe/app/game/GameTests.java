@@ -3,6 +3,7 @@ package tic_tac_toe.app.game;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -42,7 +43,7 @@ class GameTests {
     class NextMoveTests {
 
         @Test
-        void itShouldRegisterTheMoveInTheGameBoard() {
+        void itShouldRegisterTheMoveInTheGameBoard() throws Exception {
             game.nextMove(1, 3, 2);
 
             assertArrayEquals(new String[][] {
@@ -50,6 +51,13 @@ class GameTests {
                     { "", "", "O" },
                     { "", "", "" }
             }, game.getBoard());
+        }
+
+        @Test
+        void itShouldThrowIfTheSamePlayerMovesMoreThanOnceInARow() throws Exception {
+            game.nextMove(1, 1, 1);
+
+            assertThrows(Exception.class, () -> game.nextMove(1, 2, 1));
         }
     }
 }

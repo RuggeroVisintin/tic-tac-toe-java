@@ -9,14 +9,21 @@ public class Game {
 
     private int mWinner;
 
+    private int mLastPlayerToMove;
+
     public Game() {
         this.mUuid = UUID.randomUUID();
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
         this.mWinner = -1;
     }
 
-    public void nextMove(int playerId, int x, int y) {
+    public void nextMove(int playerId, int x, int y) throws Exception {
+        if (playerId == mLastPlayerToMove) {
+            throw new Exception("The same player cannot move more than once in a row");
+        }
+
         mBoard[y - 1][x - 1] = "O";
+        mLastPlayerToMove = playerId;
     }
 
     public UUID getId() {
