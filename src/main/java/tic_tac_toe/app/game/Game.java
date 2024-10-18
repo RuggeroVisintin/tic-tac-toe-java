@@ -82,11 +82,24 @@ public class Game {
             return 1;
         }
 
+        // Check Rows
         for (int i = 0; i < 3; i++) {
             if (this.mBoard[i][0] != "" && this.mBoard[i][0] == this.mBoard[i][1]
                     && this.mBoard[i][1] == this.mBoard[i][2]) {
 
-                if (this.mBoard[0][2] == "X")
+                if (this.mBoard[i][0] == "X")
+                    return 0;
+
+                return 1;
+            }
+        }
+
+        // Check Columns
+        for (int i = 0; i < 3; i++) {
+            if (this.mBoard[0][i] != "" && this.mBoard[0][i] == this.mBoard[1][i]
+                    && this.mBoard[1][i] == this.mBoard[2][i]) {
+
+                if (this.mBoard[0][i] == "X")
                     return 0;
 
                 return 1;

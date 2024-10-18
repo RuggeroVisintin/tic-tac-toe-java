@@ -133,5 +133,13 @@ class GameTests {
 
             assertEquals(0, game.getWinner());
         }
+
+        @Test
+        void itShouldComputeTheWinningPlayerWhenThreeSymoblsAlignOnTheSameColumn() throws Exception {
+            Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstColumn());
+            game.nextMove(0, 1, 3);
+
+            assertEquals(0, game.getWinner());
+        }
     }
 }

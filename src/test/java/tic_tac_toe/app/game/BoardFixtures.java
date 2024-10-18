@@ -28,4 +28,12 @@ public class BoardFixtures {
                 { "", "", "" }
         };
     }
+
+    public static String[][] moveToWinOnFirstColumn() {
+        return new String[][] {
+                { "X", "O", "O" },
+                { "X", "", "" },
+                { "", "", "" }
+        };
+    }
 }
