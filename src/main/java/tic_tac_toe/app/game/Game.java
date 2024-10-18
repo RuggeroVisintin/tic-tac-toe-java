@@ -67,19 +67,13 @@ public class Game {
         if (this.mBoard[0][0] != "" && this.mBoard[0][0] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][2]) {
 
-            if (this.mBoard[0][0] == "X")
-                return 0;
-
-            return 1;
+            return this.playerIdFromSymbol(this.mBoard[0][0]);
         }
 
         if (this.mBoard[0][2] != "" && this.mBoard[0][2] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][0]) {
 
-            if (this.mBoard[0][2] == "X")
-                return 0;
-
-            return 1;
+            return this.playerIdFromSymbol(this.mBoard[0][2]);
         }
 
         // Check Rows
@@ -87,10 +81,7 @@ public class Game {
             if (this.mBoard[i][0] != "" && this.mBoard[i][0] == this.mBoard[i][1]
                     && this.mBoard[i][1] == this.mBoard[i][2]) {
 
-                if (this.mBoard[i][0] == "X")
-                    return 0;
-
-                return 1;
+                return this.playerIdFromSymbol(this.mBoard[0][i]);
             }
         }
 
@@ -99,12 +90,19 @@ public class Game {
             if (this.mBoard[0][i] != "" && this.mBoard[0][i] == this.mBoard[1][i]
                     && this.mBoard[1][i] == this.mBoard[2][i]) {
 
-                if (this.mBoard[0][i] == "X")
-                    return 0;
-
-                return 1;
+                return this.playerIdFromSymbol(this.mBoard[0][i]);
             }
         }
+
+        return -1;
+    }
+
+    private int playerIdFromSymbol(String symbol) {
+        if (symbol == "X")
+            return 0;
+
+        if (symbol == "O")
+            return 1;
 
         return -1;
     }
