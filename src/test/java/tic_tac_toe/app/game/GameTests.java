@@ -103,5 +103,14 @@ class GameTests {
         void itShouldThrowIfPlayerIdIsNotValid() throws Exception {
             assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
         }
+
+        @Test
+        void itShouldThrowIfTheGameIsAlreadyOver() throws Exception {
+            Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
+
+            game.nextMove(1, 3, 3);
+
+            assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+        }
     }
 }

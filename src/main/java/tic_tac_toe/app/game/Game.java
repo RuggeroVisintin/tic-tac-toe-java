@@ -28,6 +28,10 @@ public class Game {
     }
 
     public void nextMove(int playerId, int x, int y) throws Exception {
+        if (this.mWinner != -1) {
+            throw new Exception("Cannot make new moves on a finished game");
+        }
+
         if (playerId != 0 && playerId != 1) {
             throw new Exception("PlayerId " + playerId + " is not valid. Use either 0 or 1");
         }
@@ -42,6 +46,8 @@ public class Game {
 
         mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId];
         mLastPlayerToMove = playerId;
+
+        mWinner = checkWin();
     }
 
     public UUID getId() {
@@ -54,5 +60,26 @@ public class Game {
 
     public int getWinner() {
         return this.mWinner;
+    }
+
+    private int checkWin() {
+        // Check diagonals
+        if (this.mBoard[0][0] != "" && this.mBoard[0][0] == this.mBoard[1][1]
+                && this.mBoard[1][1] == this.mBoard[2][2]) {
+            if (this.mBoard[0][0] != "X")
+                return 0;
+
+            return 1;
+        }
+
+        if (this.mBoard[0][2] != "" && this.mBoard[0][2] == this.mBoard[1][1]
+                && this.mBoard[1][1] == this.mBoard[2][0]) {
+            if (this.mBoard[0][2] != "X")
+                return 0;
+
+            return 1;
+        }
+
+        return -1;
     }
 }
