@@ -8,4 +8,16 @@ public class BoardFixtures {
                 { "X", "", "" }
         };
     }
+
+    public static String[][] moveToWinOnTopLeftToBottomRightDiagonal(int winnerId) {
+        if (winnerId == 0) {
+            return new String[][] {
+                    { "X", "O", "X" },
+                    { "O", "X", "" },
+                    { "O", "", "" }
+            };
+        }
+
+        return moveToWinOnTopLeftToBottomRightDiagonal();
+    }
 }

@@ -41,7 +41,7 @@ public class Game {
         }
 
         if (mBoard[y - 1][x - 1] != "") {
-            throw new Exception("Cell [" + x + ", " + 2 + "] is already taken. Choose another cell");
+            throw new Exception("Cell [" + x + ", " + y + "] is already taken. Choose another cell");
         }
 
         mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId];
@@ -66,7 +66,7 @@ public class Game {
         // Check diagonals
         if (this.mBoard[0][0] != "" && this.mBoard[0][0] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][2]) {
-            if (this.mBoard[0][0] != "X")
+            if (this.mBoard[0][0] == "X")
                 return 0;
 
             return 1;
@@ -74,7 +74,7 @@ public class Game {
 
         if (this.mBoard[0][2] != "" && this.mBoard[0][2] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][0]) {
-            if (this.mBoard[0][2] != "X")
+            if (this.mBoard[0][2] == "X")
                 return 0;
 
             return 1;

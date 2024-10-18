@@ -104,6 +104,7 @@ class GameTests {
             assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
         }
 
+        // TODO: missing rows, columns, drafts
         @Test
         void itShouldThrowIfTheGameIsAlreadyOver() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
@@ -111,6 +112,18 @@ class GameTests {
             game.nextMove(1, 3, 3);
 
             assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+        }
+
+        @Test
+        void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameDiagonal() throws Exception {
+            Game oWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
+            oWinsGame.nextMove(1, 3, 3);
+
+            Game xWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(0));
+            xWinsGame.nextMove(0, 3, 3);
+
+            assertEquals(1, oWinsGame.getWinner());
+            assertEquals(0, xWinsGame.getWinner());
         }
     }
 }
