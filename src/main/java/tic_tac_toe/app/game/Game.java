@@ -20,6 +20,13 @@ public class Game {
         this.mLastPlayerToMove = -1;
     }
 
+    public static Game fromBoardSnapshot(String[][] board) {
+        Game result = new Game();
+        result.mBoard = board;
+
+        return result;
+    }
+
     public void nextMove(int playerId, int x, int y) throws Exception {
         if (playerId != 0 && playerId != 1) {
             throw new Exception("PlayerId " + playerId + " is not valid. Use either 0 or 1");

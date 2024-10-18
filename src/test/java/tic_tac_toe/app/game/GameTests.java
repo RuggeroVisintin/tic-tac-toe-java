@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import tic_tac_toe.app.BoardFixtures;
+
 class GameTests {
     protected Game game;
 
@@ -37,6 +39,16 @@ class GameTests {
             assertEquals(-1, game.getWinner());
         }
 
+    }
+
+    @Nested
+    class FromBoardSnapshotMethod {
+        @Test
+        void itShouldInitializeANewGameFromABoardSnaposhot() {
+            Game newGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
+
+            assertArrayEquals(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(), newGame.getBoard());
+        }
     }
 
     @Nested
