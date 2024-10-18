@@ -66,6 +66,7 @@ public class Game {
         // Check diagonals
         if (this.mBoard[0][0] != "" && this.mBoard[0][0] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][2]) {
+
             if (this.mBoard[0][0] == "X")
                 return 0;
 
@@ -74,10 +75,22 @@ public class Game {
 
         if (this.mBoard[0][2] != "" && this.mBoard[0][2] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][0]) {
+
             if (this.mBoard[0][2] == "X")
                 return 0;
 
             return 1;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (this.mBoard[i][0] != "" && this.mBoard[i][0] == this.mBoard[i][1]
+                    && this.mBoard[i][1] == this.mBoard[i][2]) {
+
+                if (this.mBoard[0][2] == "X")
+                    return 0;
+
+                return 1;
+            }
         }
 
         return -1;

@@ -125,5 +125,13 @@ class GameTests {
             assertEquals(1, oWinsGame.getWinner());
             assertEquals(0, xWinsGame.getWinner());
         }
+
+        @Test
+        void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameColumn() throws Exception {
+            Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstRow());
+            game.nextMove(0, 3, 1);
+
+            assertEquals(0, game.getWinner());
+        }
     }
 }

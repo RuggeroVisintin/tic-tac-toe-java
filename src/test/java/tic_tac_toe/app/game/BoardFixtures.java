@@ -20,4 +20,12 @@ public class BoardFixtures {
 
         return moveToWinOnTopLeftToBottomRightDiagonal();
     }
+
+    public static String[][] moveToWinOnFirstRow() {
+        return new String[][] {
+                { "X", "X", "" },
+                { "O", "", "O" },
+                { "", "", "" }
+        };
+    }
 }
