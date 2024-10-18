@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -104,14 +105,22 @@ class GameTests {
             assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
         }
 
-        // TODO: missing rows, columns, drafts
         @Test
-        void itShouldThrowIfTheGameIsAlreadyOver() throws Exception {
+        void itShouldThrowIfTheGameIsAlreadyOverWithAWin() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
             game.nextMove(1, 3, 3);
 
             assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+        }
+
+        @Test
+        void itShouldThrowIfTheGameIsAlreadyOverWithADraft() throws Exception {
+            Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
+            game.nextMove(0, 3, 3);
+
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+            assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
@@ -140,6 +149,14 @@ class GameTests {
             game.nextMove(0, 1, 3);
 
             assertEquals(0, game.getWinner());
+        }
+
+        @Test
+        void itShouldDrawADraftWhenNoPlayerHasWon() throws Exception {
+            Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
+            game.nextMove(0, 3, 3);
+
+            assertEquals(-1, game.getWinner());
         }
     }
 }

@@ -36,4 +36,12 @@ public class BoardFixtures {
                 { "", "", "" }
         };
     }
+
+    public static String[][] draftOnBottomRightCorner() {
+        return new String[][] {
+                { "O", "X", "X" },
+                { "X", "O", "O" },
+                { "O", "X", "" }
+        };
+    }
 }

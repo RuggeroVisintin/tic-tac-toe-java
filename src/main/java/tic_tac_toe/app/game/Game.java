@@ -11,6 +11,8 @@ public class Game {
 
     private int mLastPlayerToMove;
 
+    private int mMovesCount;
+
     private static String[] mPlayerSymbolsMap = { "X", "O" };
 
     public Game() {
@@ -18,17 +20,26 @@ public class Game {
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
         this.mWinner = -1;
         this.mLastPlayerToMove = -1;
+        this.mMovesCount = 0;
     }
 
     public static Game fromBoardSnapshot(String[][] board) {
         Game result = new Game();
         result.mBoard = board;
 
+        for (int i = 0; i < result.mBoard.length; i++) {
+            for (int j = 0; j < result.mBoard[i].length; j++) {
+                if (result.mBoard[i][j] != "") {
+                    result.mMovesCount++;
+                }
+            }
+        }
+
         return result;
     }
 
     public void nextMove(int playerId, int x, int y) throws Exception {
-        if (this.mWinner != -1) {
+        if (this.mWinner != -1 || this.mMovesCount == 9) {
             throw new Exception("Cannot make new moves on a finished game");
         }
 
@@ -46,6 +57,7 @@ public class Game {
 
         mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId];
         mLastPlayerToMove = playerId;
+        mMovesCount++;
 
         mWinner = checkWin();
     }
