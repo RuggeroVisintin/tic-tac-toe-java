@@ -56,6 +56,15 @@ class GameTests {
             assertEquals(1, resumeGameWithO.getCurrentPlayer());
             assertEquals(0, resumeGameWithX.getCurrentPlayer());
         }
+
+        @Test
+        void itShouldSetTheWinnerBasedOnGivenSnapshot() {
+            Game player1WinningGame = Game.fromBoardSnapshot(BoardFixtures.Player1Won());
+            Game player0WinningGame = Game.fromBoardSnapshot(BoardFixtures.Player0Won());
+
+            assertEquals(1, player1WinningGame.getWinner());
+            assertEquals(0, player0WinningGame.getWinner());
+        }
     }
 
     @Nested

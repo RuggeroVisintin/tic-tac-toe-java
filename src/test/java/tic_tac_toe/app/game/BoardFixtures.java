@@ -61,4 +61,20 @@ public class BoardFixtures {
         };
     }
 
+    public static String[][] Player1Won() {
+        return new String[][] {
+                { "O", "X", "X" },
+                { "X", "O", "O" },
+                { "O", "X", "O" }
+        };
+    }
+
+    public static String[][] Player0Won() {
+        return new String[][] {
+                { "X", "X", "X" },
+                { "X", "O", "O" },
+                { "O", "X", "O" }
+        };
+    }
+
 }

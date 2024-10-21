@@ -27,6 +27,8 @@ public class Game {
         Game result = new Game();
         result.mBoard = board;
 
+        result.mWinner = result.checkWin();
+
         int xCount = 0;
         int oCount = 0;
 
