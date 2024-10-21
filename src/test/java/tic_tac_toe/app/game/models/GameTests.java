@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import tic_tac_toe.app.game.BoardFixtures;
-import tic_tac_toe.app.game.models.Game;
 
 class GameTests {
     protected Game game;
