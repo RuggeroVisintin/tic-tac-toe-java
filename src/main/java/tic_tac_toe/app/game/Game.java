@@ -27,12 +27,29 @@ public class Game {
         Game result = new Game();
         result.mBoard = board;
 
+        int xCount = 0;
+        int oCount = 0;
+
         for (int i = 0; i < result.mBoard.length; i++) {
             for (int j = 0; j < result.mBoard[i].length; j++) {
                 if (result.mBoard[i][j] != "") {
                     result.mMovesCount++;
+
+                    if (result.mBoard[i][j] == "O") {
+                        oCount++;
+                    } else {
+                        xCount++;
+                    }
                 }
             }
+        }
+
+        if (xCount < oCount) {
+            result.mLastPlayerToMove = 1;
+        }
+
+        if (oCount < xCount) {
+            result.mLastPlayerToMove = 0;
         }
 
         return result;
@@ -76,6 +93,13 @@ public class Game {
 
     public int getWinner() {
         return this.mWinner;
+    }
+
+    public int getCurrentPlayer() {
+        if (this.mLastPlayerToMove == 0)
+            return 1;
+
+        return 0;
     }
 
     private int checkWin() {

@@ -47,6 +47,15 @@ class GameTests {
 
             assertArrayEquals(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(), newGame.getBoard());
         }
+
+        @Test
+        void itShouldSetTheStartingPlayerBasedOnGivenSnapshot() {
+            Game resumeGameWithO = Game.fromBoardSnapshot(BoardFixtures.player1Turn());
+            Game resumeGameWithX = Game.fromBoardSnapshot(BoardFixtures.player0Turn());
+
+            assertEquals(1, resumeGameWithO.getCurrentPlayer());
+            assertEquals(0, resumeGameWithX.getCurrentPlayer());
+        }
     }
 
     @Nested

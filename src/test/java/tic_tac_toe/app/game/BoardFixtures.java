@@ -45,4 +45,20 @@ public class BoardFixtures {
         };
     }
 
+    public static String[][] player1Turn() {
+        return new String[][] {
+                { "X", "", "" },
+                { "", "", "" },
+                { "", "", "" }
+        };
+    }
+
+    public static String[][] player0Turn() {
+        return new String[][] {
+                { "O", "", "" },
+                { "", "", "" },
+                { "", "", "" }
+        };
+    }
+
 }
