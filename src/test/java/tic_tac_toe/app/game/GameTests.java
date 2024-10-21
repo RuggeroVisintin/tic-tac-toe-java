@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -90,19 +89,22 @@ class GameTests {
         void itShouldThrowIfTheSamePlayerMovesMoreThanOnceInARow() throws Exception {
             game.nextMove(1, 1, 1);
 
-            assertThrows(Exception.class, () -> game.nextMove(1, 2, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(1, 2, 1));
+            assertEquals("The same player cannot move more than once in a row", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfAPlayerTargetsACellThatIsAlreadyTaken() throws Exception {
             game.nextMove(1, 1, 1);
 
-            assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 1, 1));
+            assertEquals("Cell [1, 1] is already taken. Choose another cell", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfPlayerIdIsNotValid() throws Exception {
-            assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+            assertEquals("PlayerId 2 is not valid. Use either 0 or 1", exception.getMessage());
         }
 
         @Test
@@ -111,7 +113,8 @@ class GameTests {
 
             game.nextMove(1, 3, 3);
 
-            assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+            assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
