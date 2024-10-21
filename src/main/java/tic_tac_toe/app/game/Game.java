@@ -32,14 +32,10 @@ public class Game {
 
         for (int i = 0; i < result.mBoard.length; i++) {
             for (int j = 0; j < result.mBoard[i].length; j++) {
-                if (result.mBoard[i][j] != "") {
-                    result.mMovesCount++;
-
-                    if (result.mBoard[i][j] == "O") {
-                        oCount++;
-                    } else {
-                        xCount++;
-                    }
+                if (result.mBoard[i][j] == "O") {
+                    oCount++;
+                } else if (result.mBoard[i][j] == "X") {
+                    xCount++;
                 }
             }
         }
@@ -51,6 +47,8 @@ public class Game {
         if (oCount < xCount) {
             result.mLastPlayerToMove = 0;
         }
+
+        result.mMovesCount = xCount + oCount;
 
         return result;
     }
