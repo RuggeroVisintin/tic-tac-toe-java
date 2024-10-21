@@ -62,6 +62,10 @@ public class Game {
         mWinner = checkWin();
     }
 
+    public boolean isDraft() {
+        return this.mMovesCount == 9 && this.mWinner == -1;
+    }
+
     public UUID getId() {
         return mUuid;
     }

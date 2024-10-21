@@ -162,4 +162,22 @@ class GameTests {
             assertEquals(-1, game.getWinner());
         }
     }
+
+    @Nested
+    class isDraft {
+        @Test
+        void itShouldReturnTrueIfTheGameEndedWithADraft() throws Exception {
+            Game newGame = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
+            newGame.nextMove(0, 3, 3);
+
+            assertEquals(true, newGame.isDraft());
+        }
+
+        @Test
+        void itShouldReturnFalseIfTheGameIsNotEnded() throws Exception {
+            Game newGame = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
+
+            assertEquals(false, newGame.isDraft());
+        }
+    }
 }
