@@ -179,5 +179,13 @@ class GameTests {
 
             assertEquals(false, newGame.isDraft());
         }
+
+        @Test
+        void itShouldReturnFalseIfTheGameEndedWithAWin() throws Exception {
+            Game newGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
+
+            newGame.nextMove(1, 3, 3);
+            assertEquals(false, newGame.isDraft());
+        }
     }
 }
