@@ -42,9 +42,7 @@ public class Game {
 
         if (xCount < oCount) {
             result.mLastPlayerToMove = 1;
-        }
-
-        if (oCount < xCount) {
+        } else if (oCount < xCount) {
             result.mLastPlayerToMove = 0;
         }
 
