@@ -1,4 +1,4 @@
-package tic_tac_toe.app.game;
+package tic_tac_toe.app.domain.game;
 
 public class BoardFixtures {
     public static String[][] moveToWinOnTopLeftToBottomRightDiagonal() {

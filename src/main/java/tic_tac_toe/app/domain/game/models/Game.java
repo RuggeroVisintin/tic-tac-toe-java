@@ -1,4 +1,4 @@
-package tic_tac_toe.app.game.models;
+package tic_tac_toe.app.domain.game.models;
 
 import java.util.UUID;
 

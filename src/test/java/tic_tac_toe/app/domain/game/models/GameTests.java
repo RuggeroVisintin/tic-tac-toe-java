@@ -1,4 +1,4 @@
-package tic_tac_toe.app.game.models;
+package tic_tac_toe.app.domain.game.models;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import tic_tac_toe.app.game.BoardFixtures;
+import tic_tac_toe.app.domain.game.BoardFixtures;
+import tic_tac_toe.app.domain.game.models.Game;
 
 class GameTests {
     protected Game game;
