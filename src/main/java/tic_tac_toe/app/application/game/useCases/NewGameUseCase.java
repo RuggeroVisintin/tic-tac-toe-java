@@ -5,6 +5,10 @@ import tic_tac_toe.app.domain.game.ports.GameRepository;
 
 public class NewGameUseCase {
     public Game execute(GameRepository repository) {
-        return new Game();
+        Game newGame = new Game();
+
+        repository.save(newGame);
+
+        return newGame;
     }
 }
