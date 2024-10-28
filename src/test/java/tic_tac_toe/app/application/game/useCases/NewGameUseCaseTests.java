@@ -15,14 +15,11 @@ class FakeGameRepository implements GameRepository {
 
     @Override
     public void save(Game game) {
-        // TODO Auto-generated method stub
-
         savedGame = game;
     }
 
     @Override
     public Game findById(UUID gameId) {
-        // TODO Auto-generated method stub
         return null;
     }
 }
