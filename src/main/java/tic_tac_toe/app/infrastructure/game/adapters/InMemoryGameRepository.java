@@ -3,9 +3,12 @@ package tic_tac_toe.app.infrastructure.game.adapters;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.springframework.stereotype.Repository;
+
 import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.ports.GameRepository;
 
+@Repository
 public class InMemoryGameRepository implements GameRepository {
     private ArrayList<Game> mGames;
 
