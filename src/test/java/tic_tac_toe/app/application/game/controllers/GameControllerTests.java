@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.ports.GameRepository;
 
@@ -42,7 +43,7 @@ public class GameControllerTests {
             FakeGameRepository repository = new FakeGameRepository();
             GameController controller = new GameController(repository);
 
-            Game newGame = controller.newGame();
+            GameRepresentation newGame = controller.newGame();
             assertNotNull(newGame);
         }
     }

@@ -3,8 +3,8 @@ package tic_tac_toe.app.application.game.controllers;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.application.game.useCases.NewGameUseCase;
-import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.ports.GameRepository;
 
 @RestController
@@ -17,7 +17,7 @@ public class GameController {
     }
 
     @PostMapping("/v1/games")
-    public Game newGame() {
-        return new NewGameUseCase().execute(repository);
+    public GameRepresentation newGame() {
+        return new GameRepresentation((new NewGameUseCase().execute(repository)));
     }
 }
