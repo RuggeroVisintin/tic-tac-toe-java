@@ -65,4 +65,19 @@ public class GameControllerTests {
                     resultedGame.getBoard());
         }
     }
+
+    @Nested
+    class RetrieveExistingGameTests {
+        @Test
+        void itShouldRetriveTheGameData() throws Exception {
+            Game ongoingGame = new Game();
+            FakeGameRepository repository = new FakeGameRepository();
+            repository.savedGame = ongoingGame;
+
+            GameController controller = new GameController(repository);
+            GameRepresentation resultedGame = controller.retrieveExistingGame(ongoingGame.getId());
+
+            assertEquals(ongoingGame.getId(), resultedGame.getId());
+        }
+    }
 }
