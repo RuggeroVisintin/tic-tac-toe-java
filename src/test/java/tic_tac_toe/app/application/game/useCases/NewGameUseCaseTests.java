@@ -3,6 +3,7 @@ package tic_tac_toe.app.application.game.useCases;
 import org.junit.jupiter.api.Test;
 
 import tic_tac_toe.app.application.game.BaseFakeGameRepository;
+import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.ports.GameRepository;
 
@@ -23,10 +24,10 @@ class NewGameUseCaseTests {
     void itShouldCreateAndReturnANewGame() {
         GameRepository gameRepo = new BaseFakeGameRepository();
 
-        Game newGame = new NewGameUseCase()
+        GameRepresentation newGame = new NewGameUseCase()
                 .execute(gameRepo);
 
-        Game newGame2 = new NewGameUseCase()
+        GameRepresentation newGame2 = new NewGameUseCase()
                 .execute(gameRepo);
 
         assertNotEquals(newGame.getId(), newGame2.getId());
@@ -36,9 +37,11 @@ class NewGameUseCaseTests {
     void itShouldSaveANewlyCreatedGame() {
         FakeGameRepository gameRepo = new FakeGameRepository();
 
-        Game newGame = new NewGameUseCase()
+        GameRepresentation result = new NewGameUseCase()
                 .execute(gameRepo);
 
-        assertEquals(newGame, gameRepo.savedGame);
+        GameRepresentation expected = new GameRepresentation(gameRepo.savedGame);
+
+        assertEquals(expected.getId(), result.getId());
     }
 }

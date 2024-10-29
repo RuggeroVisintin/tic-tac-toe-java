@@ -18,6 +18,6 @@ public class GameController {
 
     @PostMapping("/v1/games")
     public GameRepresentation newGame() {
-        return new GameRepresentation((new NewGameUseCase().execute(repository)));
+        return new NewGameUseCase().execute(repository);
     }
 }
