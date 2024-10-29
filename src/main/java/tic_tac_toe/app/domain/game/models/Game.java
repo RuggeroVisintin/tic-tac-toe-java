@@ -23,6 +23,18 @@ public class Game {
         this.mMovesCount = 0;
     }
 
+    public Game clone() {
+        Game clone = new Game();
+
+        clone.mUuid = this.mUuid;
+        clone.mWinner = this.mWinner;
+        clone.mMovesCount = this.mMovesCount;
+        clone.mLastPlayerToMove = this.mMovesCount;
+        clone.mBoard = this.mBoard;
+
+        return clone;
+    }
+
     public static Game fromBoardSnapshot(String[][] board) {
         Game result = new Game();
         result.mBoard = board;

@@ -2,6 +2,7 @@ package tic_tac_toe.app.domain.game.models;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -184,7 +185,7 @@ class GameTests {
     }
 
     @Nested
-    class isDraft {
+    class IsDraftTests {
         @Test
         void itShouldReturnTrueIfTheGameEndedWithADraft() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
@@ -206,6 +207,28 @@ class GameTests {
 
             newGame.nextMove(1, 3, 3);
             assertEquals(false, newGame.isDraft());
+        }
+    }
+
+    @Nested
+    class CloneTests {
+
+        @Test
+        void itShouldCreateACopyOfTheObject() {
+            Game originalGame = new Game();
+            Game gameClone = originalGame.clone();
+
+            assertEquals(originalGame, gameClone);
+        }
+
+        @Test
+        void itShouldNotReferenceTheOriginalObject() throws Exception {
+            Game originalGame = new Game();
+            Game gameClone = originalGame.clone();
+
+            originalGame.nextMove(1, 1, 1);
+
+            assertNotEquals(originalGame, gameClone);
         }
     }
 }
