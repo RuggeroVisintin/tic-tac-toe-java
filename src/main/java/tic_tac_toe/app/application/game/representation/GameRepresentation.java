@@ -12,8 +12,8 @@ public class GameRepresentation {
 
     public GameRepresentation(Game game) {
         mBoard = game.getBoard();
-        mIsGameOver = game.getWinner() != -1;
-        mWinner = game.getWinner();
+        mIsGameOver = game.getWinner() != null;
+        mWinner = mIsGameOver ? game.getWinner().toInt() : -1;
         mId = game.getId();
     }
 

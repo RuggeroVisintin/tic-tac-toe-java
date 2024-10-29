@@ -8,9 +8,9 @@ public class Game implements Cloneable {
 
     private String[][] mBoard;
 
-    private int mWinner;
+    private PlayerID mWinner;
 
-    private int mLastPlayerToMove;
+    private PlayerID mLastPlayerToMove;
 
     private int mMovesCount;
 
@@ -21,8 +21,8 @@ public class Game implements Cloneable {
     Game() {
         this.mUuid = UUID.randomUUID();
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
-        this.mWinner = -1;
-        this.mLastPlayerToMove = -1;
+        this.mWinner = null;
+        this.mLastPlayerToMove = null;
         this.mMovesCount = 0;
     }
 
@@ -41,7 +41,7 @@ public class Game implements Cloneable {
         return clone;
     }
 
-    public static Game fromBoardSnapshot(String[][] board) {
+    public static Game fromBoardSnapshot(String[][] board) throws InvalidPlayerException {
         Game result = new Game();
         result.mBoard = board;
 
@@ -61,9 +61,9 @@ public class Game implements Cloneable {
         }
 
         if (xCount < oCount) {
-            result.mLastPlayerToMove = 1;
+            result.mLastPlayerToMove = new PlayerID(1);
         } else if (oCount < xCount) {
-            result.mLastPlayerToMove = 0;
+            result.mLastPlayerToMove = new PlayerID(0);
         }
 
         result.mMovesCount = xCount + oCount;
@@ -71,16 +71,12 @@ public class Game implements Cloneable {
         return result;
     }
 
-    public void nextMove(int playerId, int x, int y) throws InvalidMoveException, InvalidPlayerException {
-        if (this.mWinner != -1 || this.mMovesCount == 9) {
+    public void nextMove(PlayerID playerId, int x, int y) throws InvalidMoveException, InvalidPlayerException {
+        if (this.mWinner != null || this.mMovesCount == 9) {
             throw new InvalidMoveException("Cannot make new moves on a finished game");
         }
 
-        if (playerId != 0 && playerId != 1) {
-            throw new InvalidPlayerException("PlayerId " + playerId + " is not valid. Use either 0 or 1");
-        }
-
-        if (playerId == mLastPlayerToMove) {
+        if (playerId.equals(mLastPlayerToMove)) {
             throw new InvalidMoveException("The same player cannot move more than once in a row");
         }
 
@@ -88,7 +84,7 @@ public class Game implements Cloneable {
             throw new InvalidMoveException("Cell [" + x + ", " + y + "] is already taken. Choose another cell");
         }
 
-        mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId];
+        mBoard[y - 1][x - 1] = mPlayerSymbolsMap[playerId.toInt()];
         mLastPlayerToMove = playerId;
         mMovesCount++;
 
@@ -96,7 +92,7 @@ public class Game implements Cloneable {
     }
 
     public boolean isDraft() {
-        return this.mMovesCount == 9 && this.mWinner == -1;
+        return this.mMovesCount == 9 && this.mWinner == null;
     }
 
     @Override
@@ -129,18 +125,23 @@ public class Game implements Cloneable {
         return this.mBoard;
     }
 
-    public int getWinner() {
+    public PlayerID getWinner() {
         return this.mWinner;
     }
 
-    public int getCurrentPlayer() {
-        if (this.mLastPlayerToMove == 0)
-            return 1;
+    public PlayerID getCurrentPlayer() throws InvalidPlayerException {
+        if (this.mLastPlayerToMove == null) {
+            return null;
+        }
 
-        return 0;
+        if (this.mLastPlayerToMove.equals(new PlayerID(0))) {
+            return new PlayerID(1);
+        }
+
+        return new PlayerID(0);
     }
 
-    private int checkWin() {
+    private PlayerID checkWin() throws InvalidPlayerException {
         // Check diagonals
         if (this.mBoard[0][0] != "" && this.mBoard[0][0] == this.mBoard[1][1]
                 && this.mBoard[1][1] == this.mBoard[2][2]) {
@@ -172,16 +173,16 @@ public class Game implements Cloneable {
             }
         }
 
-        return -1;
+        return null;
     }
 
-    private int playerIdFromSymbol(String symbol) {
+    private PlayerID playerIdFromSymbol(String symbol) throws InvalidPlayerException {
         if (symbol == "X")
-            return 0;
+            return new PlayerID(0);
 
         if (symbol == "O")
-            return 1;
+            return new PlayerID(1);
 
-        return -1;
+        return null;
     }
 }

@@ -39,7 +39,7 @@ class GameTests {
 
         @Test
         void itShouldStartANewGameWithNoWinnerSet() {
-            assertEquals(-1, game.getWinner());
+            assertEquals(null, game.getWinner());
         }
 
     }
@@ -47,28 +47,28 @@ class GameTests {
     @Nested
     class FromBoardSnapshotMethod {
         @Test
-        void itShouldInitializeANewGameFromABoardSnaposhot() {
+        void itShouldInitializeANewGameFromABoardSnaposhot() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
             assertArrayEquals(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(), newGame.getBoard());
         }
 
         @Test
-        void itShouldSetTheStartingPlayerBasedOnGivenSnapshot() {
+        void itShouldSetTheStartingPlayerBasedOnGivenSnapshot() throws Exception {
             Game resumeGameWithO = Game.fromBoardSnapshot(BoardFixtures.player1Turn());
             Game resumeGameWithX = Game.fromBoardSnapshot(BoardFixtures.player0Turn());
 
-            assertEquals(1, resumeGameWithO.getCurrentPlayer());
-            assertEquals(0, resumeGameWithX.getCurrentPlayer());
+            assertEquals(new PlayerID(1), resumeGameWithO.getCurrentPlayer());
+            assertEquals(new PlayerID(0), resumeGameWithX.getCurrentPlayer());
         }
 
         @Test
-        void itShouldSetTheWinnerBasedOnGivenSnapshot() {
+        void itShouldSetTheWinnerBasedOnGivenSnapshot() throws Exception {
             Game player1WinningGame = Game.fromBoardSnapshot(BoardFixtures.Player1Won());
             Game player0WinningGame = Game.fromBoardSnapshot(BoardFixtures.Player0Won());
 
-            assertEquals(1, player1WinningGame.getWinner());
-            assertEquals(0, player0WinningGame.getWinner());
+            assertEquals(new PlayerID(1), player1WinningGame.getWinner());
+            assertEquals(new PlayerID(0), player0WinningGame.getWinner());
         }
     }
 
@@ -77,7 +77,7 @@ class GameTests {
 
         @Test
         void itShouldRegisterTheMoveInTheGameBoard() throws Exception {
-            game.nextMove(1, 3, 2);
+            game.nextMove(new PlayerID(1), 3, 2);
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -88,7 +88,7 @@ class GameTests {
 
         @Test
         void itShouldResisterXOnTheBoardWhenPlayer0Moves() throws Exception {
-            game.nextMove(0, 3, 2);
+            game.nextMove(new PlayerID(0), 3, 2);
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -99,7 +99,7 @@ class GameTests {
 
         @Test
         void itShouldResisterOOnTheBoardWhenPlayer0Moves() throws Exception {
-            game.nextMove(1, 3, 2);
+            game.nextMove(new PlayerID(1), 3, 2);
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -110,23 +110,23 @@ class GameTests {
 
         @Test
         void itShouldThrowIfTheSamePlayerMovesMoreThanOnceInARow() throws Exception {
-            game.nextMove(1, 1, 1);
+            game.nextMove(new PlayerID(1), 1, 1);
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(1, 2, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new PlayerID(1), 2, 1));
             assertEquals("The same player cannot move more than once in a row", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfAPlayerTargetsACellThatIsAlreadyTaken() throws Exception {
-            game.nextMove(1, 1, 1);
+            game.nextMove(new PlayerID(1), 1, 1);
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 1, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new PlayerID(0), 1, 1));
             assertEquals("Cell [1, 1] is already taken. Choose another cell", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfPlayerIdIsNotValid() throws Exception {
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(2, 1, 1));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new PlayerID(2), 1, 1));
             assertEquals("PlayerId 2 is not valid. Use either 0 or 1", exception.getMessage());
         }
 
@@ -134,55 +134,55 @@ class GameTests {
         void itShouldThrowIfTheGameIsAlreadyOverWithAWin() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
-            game.nextMove(1, 3, 3);
+            game.nextMove(new PlayerID(1), 3, 3);
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new PlayerID(0), 3, 2));
             assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfTheGameIsAlreadyOverWithADraft() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            game.nextMove(0, 3, 3);
+            game.nextMove(new PlayerID(0), 3, 3);
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(0, 3, 2));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new PlayerID(0), 3, 2));
             assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameDiagonal() throws Exception {
             Game oWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
-            oWinsGame.nextMove(1, 3, 3);
+            oWinsGame.nextMove(new PlayerID(1), 3, 3);
 
             Game xWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(0));
-            xWinsGame.nextMove(0, 3, 3);
+            xWinsGame.nextMove(new PlayerID(0), 3, 3);
 
-            assertEquals(1, oWinsGame.getWinner());
-            assertEquals(0, xWinsGame.getWinner());
+            assertEquals(new PlayerID(1), oWinsGame.getWinner());
+            assertEquals(new PlayerID(0), xWinsGame.getWinner());
         }
 
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameColumn() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstRow());
-            game.nextMove(0, 3, 1);
+            game.nextMove(new PlayerID(0), 3, 1);
 
-            assertEquals(0, game.getWinner());
+            assertEquals(new PlayerID(0), game.getWinner());
         }
 
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymoblsAlignOnTheSameColumn() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstColumn());
-            game.nextMove(0, 1, 3);
+            game.nextMove(new PlayerID(0), 1, 3);
 
-            assertEquals(0, game.getWinner());
+            assertEquals(new PlayerID(0), game.getWinner());
         }
 
         @Test
         void itShouldDrawADraftWhenNoPlayerHasWon() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            game.nextMove(0, 3, 3);
+            game.nextMove(new PlayerID(0), 3, 3);
 
-            assertEquals(-1, game.getWinner());
+            assertEquals(null, game.getWinner());
         }
     }
 
@@ -191,7 +191,7 @@ class GameTests {
         @Test
         void itShouldReturnTrueIfTheGameEndedWithADraft() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            newGame.nextMove(0, 3, 3);
+            newGame.nextMove(new PlayerID(0), 3, 3);
 
             assertEquals(true, newGame.isDraft());
         }
@@ -207,7 +207,7 @@ class GameTests {
         void itShouldReturnFalseIfTheGameEndedWithAWin() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
-            newGame.nextMove(1, 3, 3);
+            newGame.nextMove(new PlayerID(1), 3, 3);
             assertEquals(false, newGame.isDraft());
         }
     }
@@ -219,13 +219,13 @@ class GameTests {
             Game originalGame = new Game();
             Game gameClone = originalGame.clone();
 
-            originalGame.nextMove(1, 1, 1);
+            originalGame.nextMove(new PlayerID(1), 1, 1);
 
             assertNotEquals(originalGame, gameClone);
         }
 
         @Test
-        void itShouldCreateACloneOfTheOriginalObject() {
+        void itShouldCreateACloneOfTheOriginalObject() throws Exception {
             Game originalGame = new Game();
             Game gameClone = originalGame.clone();
 
@@ -250,7 +250,7 @@ class GameTests {
         void itShouldReturnFalseIfTheStatesDontMatch() throws Exception {
             Game newGame = new Game();
             Game gameCopy = newGame.clone();
-            gameCopy.nextMove(1, 1, 1);
+            gameCopy.nextMove(new PlayerID(1), 1, 1);
 
             assertFalse(newGame.equals(gameCopy));
         }
