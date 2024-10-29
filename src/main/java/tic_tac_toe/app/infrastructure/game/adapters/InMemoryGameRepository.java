@@ -17,7 +17,7 @@ public class InMemoryGameRepository implements GameRepository {
     }
 
     public void save(Game game) {
-        mGames.add(game);
+        mGames.add(game.clone());
     }
 
     public Game findById(UUID gameId) {
