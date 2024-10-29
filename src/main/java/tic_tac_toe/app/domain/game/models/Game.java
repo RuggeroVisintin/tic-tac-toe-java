@@ -1,5 +1,6 @@
 package tic_tac_toe.app.domain.game.models;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class Game implements Cloneable {
@@ -15,7 +16,9 @@ public class Game implements Cloneable {
 
     private static String[] mPlayerSymbolsMap = { "X", "O" };
 
-    public Game() {
+    public
+
+    Game() {
         this.mUuid = UUID.randomUUID();
         this.mBoard = new String[][] { { "", "", "" }, { "", "", "" }, { "", "", "" } };
         this.mWinner = -1;
@@ -29,7 +32,7 @@ public class Game implements Cloneable {
         clone.mUuid = this.mUuid;
         clone.mWinner = this.mWinner;
         clone.mMovesCount = this.mMovesCount;
-        clone.mLastPlayerToMove = this.mMovesCount;
+        clone.mLastPlayerToMove = this.mLastPlayerToMove;
 
         clone.mBoard[0] = this.mBoard[0].clone();
         clone.mBoard[1] = this.mBoard[1].clone();
@@ -94,6 +97,28 @@ public class Game implements Cloneable {
 
     public boolean isDraft() {
         return this.mMovesCount == 9 && this.mWinner == -1;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        boolean isEqual = false;
+
+        if (other.getClass() == this.getClass()) {
+            Game typedOther = (Game) other;
+
+            isEqual = mUuid.equals(typedOther.mUuid)
+                    && Arrays.deepEquals(mBoard, typedOther.mBoard)
+                    && mLastPlayerToMove == typedOther.mLastPlayerToMove
+                    && mWinner == typedOther.mWinner
+                    && mMovesCount == typedOther.mMovesCount;
+        }
+
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        return mUuid.hashCode();
     }
 
     public UUID getId() {

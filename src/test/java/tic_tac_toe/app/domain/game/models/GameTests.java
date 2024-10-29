@@ -2,10 +2,11 @@ package tic_tac_toe.app.domain.game.models;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -221,6 +222,37 @@ class GameTests {
             originalGame.nextMove(1, 1, 1);
 
             assertNotEquals(originalGame, gameClone);
+        }
+
+        @Test
+        void itShouldCreateACloneOfTheOriginalObject() {
+            Game originalGame = new Game();
+            Game gameClone = originalGame.clone();
+
+            assertArrayEquals(originalGame.getBoard(), gameClone.getBoard());
+            assertEquals(originalGame.getId(), gameClone.getId());
+            assertEquals(originalGame.getWinner(), gameClone.getWinner());
+            assertEquals(originalGame.getCurrentPlayer(), gameClone.getCurrentPlayer());
+        }
+    }
+
+    @Nested
+    class EqualsTests {
+        @Test
+        void itShouldReturnTrueIfTheStateIsTheSame() {
+            Game newGame = new Game();
+            Game gameCopy = newGame.clone();
+
+            assertTrue(newGame.equals(gameCopy));
+        }
+
+        @Test
+        void itShouldReturnFalseIfTheStatesDontMatch() throws Exception {
+            Game newGame = new Game();
+            Game gameCopy = newGame.clone();
+            gameCopy.nextMove(1, 1, 1);
+
+            assertFalse(newGame.equals(gameCopy));
         }
     }
 }
