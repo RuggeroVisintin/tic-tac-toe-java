@@ -22,7 +22,7 @@ public class InMemoryGameRepository implements GameRepository {
 
     public Game findById(UUID gameId) {
         for (Game game : mGames) {
-            if (game.getId() == gameId) {
+            if (game.getId().equals(gameId)) {
                 return game;
             }
         }
