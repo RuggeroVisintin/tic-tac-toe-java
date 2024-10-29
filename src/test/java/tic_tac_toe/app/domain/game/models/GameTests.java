@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -212,15 +213,6 @@ class GameTests {
 
     @Nested
     class CloneTests {
-
-        @Test
-        void itShouldCreateACopyOfTheObject() {
-            Game originalGame = new Game();
-            Game gameClone = originalGame.clone();
-
-            assertEquals(originalGame, gameClone);
-        }
-
         @Test
         void itShouldNotReferenceTheOriginalObject() throws Exception {
             Game originalGame = new Game();

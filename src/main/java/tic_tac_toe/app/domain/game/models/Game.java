@@ -2,7 +2,7 @@ package tic_tac_toe.app.domain.game.models;
 
 import java.util.UUID;
 
-public class Game {
+public class Game implements Cloneable {
     private UUID mUuid;
 
     private String[][] mBoard;
@@ -30,7 +30,10 @@ public class Game {
         clone.mWinner = this.mWinner;
         clone.mMovesCount = this.mMovesCount;
         clone.mLastPlayerToMove = this.mMovesCount;
-        clone.mBoard = this.mBoard;
+
+        clone.mBoard[0] = this.mBoard[0].clone();
+        clone.mBoard[1] = this.mBoard[1].clone();
+        clone.mBoard[2] = this.mBoard[2].clone();
 
         return clone;
     }
