@@ -1,6 +1,7 @@
 package tic_tac_toe.app.application.game.controllers;
 
 import java.util.UUID;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +17,7 @@ import tic_tac_toe.app.application.game.representation.MoveRepresentation;
 import tic_tac_toe.app.application.game.useCases.MakeAMoveUseCase;
 import tic_tac_toe.app.application.game.useCases.NewGameUseCase;
 import tic_tac_toe.app.application.game.useCases.RetrieveExistingGameUseCase;
+import tic_tac_toe.app.domain.game.models.GameNotFoundException;
 import tic_tac_toe.app.domain.game.models.InvalidMoveException;
 import tic_tac_toe.app.domain.game.models.InvalidPlayerException;
 import tic_tac_toe.app.domain.game.ports.GameRepository;
@@ -48,7 +50,13 @@ public class GameController {
 
     @ExceptionHandler({ InvalidPlayerException.class, InvalidMoveException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleInvalidRequest(Exception err) {
+    public String handleInvalidRequest(IllegalArgumentException err) {
+        return err.getMessage();
+    }
+
+    @ExceptionHandler({ GameNotFoundException.class })
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFoundRequest(NoSuchElementException err) {
         return err.getMessage();
     }
 }
