@@ -1,6 +1,7 @@
 package tic_tac_toe.app.infrastructure.game.adapters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.models.GameNotFoundException;
+import tic_tac_toe.app.domain.game.models.Move;
+import tic_tac_toe.app.domain.game.models.Player;
 
 public class InMemoryGameRepositoryTests {
 
@@ -36,6 +39,20 @@ public class InMemoryGameRepositoryTests {
                     () -> repository.findById(randomUuid));
 
             assertEquals("Could not find game with id " + randomUuid, exception.getMessage());
+        }
+
+        @Test
+        void itShouldReturnACloneOfTheGameObjectToAvoidImplicitySaveOperations() {
+            Game newGame = new Game();
+
+            InMemoryGameRepository repository = new InMemoryGameRepository();
+            repository.save(newGame);
+
+            Game savedGame = repository.findById(newGame.getId());
+
+            savedGame.nextMove(new Move(new Player(1), 1, 1));
+
+            assertNotEquals(savedGame, repository.findById(newGame.getId()));
         }
     }
 

@@ -24,7 +24,7 @@ public class InMemoryGameRepository implements GameRepository {
     public Game findById(UUID gameId) throws GameNotFoundException {
         for (Game game : mGames) {
             if (game.getId().equals(gameId)) {
-                return game;
+                return game.clone();
             }
         }
 
