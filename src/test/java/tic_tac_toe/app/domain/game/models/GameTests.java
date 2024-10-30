@@ -229,10 +229,7 @@ class GameTests {
             Game originalGame = new Game();
             Game gameClone = originalGame.clone();
 
-            assertArrayEquals(originalGame.getBoard(), gameClone.getBoard());
-            assertEquals(originalGame.getId(), gameClone.getId());
-            assertEquals(originalGame.getWinner(), gameClone.getWinner());
-            assertEquals(originalGame.getCurrentPlayer(), gameClone.getCurrentPlayer());
+            assertEquals(originalGame, gameClone);
         }
     }
 
