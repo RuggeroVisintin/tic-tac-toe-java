@@ -13,7 +13,7 @@ public class GameRepresentation {
     public GameRepresentation(Game game) {
         mBoard = game.getBoard();
         mIsGameOver = game.getWinner() != null;
-        mWinner = mIsGameOver ? game.getWinner().toInt() : -1;
+        mWinner = mIsGameOver ? game.getWinner().playerId() : -1;
         mId = game.getId();
     }
 
