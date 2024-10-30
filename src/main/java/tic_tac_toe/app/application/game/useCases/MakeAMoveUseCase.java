@@ -8,9 +8,9 @@ import tic_tac_toe.app.domain.game.ports.GameRepository;
 
 public class MakeAMoveUseCase {
     public GameRepresentation execute(MoveRepresentation move, GameRepository repository) throws Exception {
-        Game currentGame = repository.findById(move.getGameId());
+        Game currentGame = repository.findById(move.gameId());
 
-        currentGame.nextMove(new Player(move.playerId()), move.getX(), move.getY());
+        currentGame.nextMove(new Player(move.playerId()), move.x(), move.y());
         repository.save(currentGame);
 
         return GameRepresentation.fromGame(currentGame);
