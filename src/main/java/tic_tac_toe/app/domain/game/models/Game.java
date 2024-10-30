@@ -99,7 +99,7 @@ public class Game implements Cloneable {
     public boolean equals(Object other) {
         boolean isEqual = false;
 
-        if (other.getClass() == this.getClass()) {
+        if (other != null && other.getClass() == this.getClass()) {
             Game typedOther = (Game) other;
 
             isEqual = mUuid.equals(typedOther.mUuid)

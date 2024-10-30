@@ -254,5 +254,13 @@ class GameTests {
 
             assertFalse(newGame.equals(gameCopy));
         }
+
+        @Test
+        void itShouldReturnFalseIfTheObjectIsNull() {
+            Game newGame = new Game();
+            Game otherGame = null;
+
+            assertFalse(newGame.equals(otherGame));
+        }
     }
 }
