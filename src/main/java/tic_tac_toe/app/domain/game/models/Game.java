@@ -113,11 +113,6 @@ public class Game implements Cloneable {
         return isEqual;
     }
 
-    @Override
-    public int hashCode() {
-        return mUuid.hashCode();
-    }
-
     public UUID getId() {
         return mUuid;
     }
