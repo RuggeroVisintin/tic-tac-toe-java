@@ -71,21 +71,24 @@ public class Game implements Cloneable {
         return result;
     }
 
-    public void nextMove(Player Player, int x, int y) throws InvalidMoveException, InvalidPlayerException {
+    public void nextMove(Player player, int x, int y) throws InvalidMoveException, InvalidPlayerException {
+        Move move = new Move(player, x, y);
+
         if (this.mWinner != null || this.mMovesCount == 9) {
             throw new InvalidMoveException("Cannot make new moves on a finished game");
         }
 
-        if (Player.equals(mLastPlayerToMove)) {
+        if (move.player().equals(mLastPlayerToMove)) {
             throw new InvalidMoveException("The same player cannot move more than once in a row");
         }
 
-        if (mBoard[y - 1][x - 1] != "") {
-            throw new InvalidMoveException("Cell [" + x + ", " + y + "] is already taken. Choose another cell");
+        if (mBoard[move.y() - 1][move.x() - 1] != "") {
+            throw new InvalidMoveException(
+                    "Cell [" + move.x() + ", " + move.y() + "] is already taken. Choose another cell");
         }
 
-        mBoard[y - 1][x - 1] = mPlayerSymbolsMap[Player.playerId()];
-        mLastPlayerToMove = Player;
+        mBoard[move.y() - 1][move.x() - 1] = mPlayerSymbolsMap[move.player().playerId()];
+        mLastPlayerToMove = move.player();
         mMovesCount++;
 
         mWinner = checkWin();
