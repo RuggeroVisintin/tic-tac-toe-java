@@ -7,6 +7,6 @@ import tic_tac_toe.app.domain.game.ports.GameRepository;
 
 public class RetrieveExistingGameUseCase {
     public GameRepresentation execute(UUID gameId, GameRepository gameRepository) {
-        return new GameRepresentation(gameRepository.findById(gameId));
+        return GameRepresentation.fromGame(gameRepository.findById(gameId));
     }
 }

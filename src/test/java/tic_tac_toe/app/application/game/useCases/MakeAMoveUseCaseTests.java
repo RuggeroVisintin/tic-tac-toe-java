@@ -38,7 +38,7 @@ public class MakeAMoveUseCaseTests {
                 1, 1), gameRepository);
 
         newGame.nextMove(new Player(1), 1, 1);
-        assertArrayEquals(newGame.getBoard(), updatedGame.getBoard());
+        assertArrayEquals(newGame.getBoard(), updatedGame.board());
     }
 
     @Test

@@ -35,6 +35,6 @@ public class RetrieveExistingGameUseCaseTests {
         GameRepresentation retrievedGame = (new RetrieveExistingGameUseCase().execute(gameRepository.savedGame.getId(),
                 gameRepository));
 
-        assertArrayEquals(new GameRepresentation(gameRepository.savedGame).getBoard(), retrievedGame.getBoard());
+        assertArrayEquals(GameRepresentation.fromGame(gameRepository.savedGame).board(), retrievedGame.board());
     }
 }

@@ -4,32 +4,12 @@ import java.util.UUID;
 
 import tic_tac_toe.app.domain.game.models.Game;
 
-public class GameRepresentation {
-    private String[][] mBoard;
-    private boolean mIsGameOver;
-    private int mWinner;
-    private UUID mId;
-
-    public GameRepresentation(Game game) {
-        mBoard = game.getBoard();
-        mIsGameOver = game.getWinner() != null;
-        mWinner = mIsGameOver ? game.getWinner().playerId() : -1;
-        mId = game.getId();
-    }
-
-    public String[][] getBoard() {
-        return this.mBoard;
-    }
-
-    public boolean isGameOver() {
-        return this.mIsGameOver;
-    }
-
-    public int getWinner() {
-        return mWinner;
-    }
-
-    public UUID getId() {
-        return mId;
+public record GameRepresentation(String[][] board, boolean isGameOver, int winnerId, UUID gameId) {
+    public static GameRepresentation fromGame(Game game) {
+        return new GameRepresentation(
+                game.getBoard(),
+                game.getWinner() != null,
+                game.getWinner() != null ? game.getWinner().playerId() : -1,
+                game.getId());
     }
 }

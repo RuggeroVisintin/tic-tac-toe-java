@@ -62,7 +62,7 @@ public class GameControllerTests {
             GameRepresentation resultedGame = controller.makeAMove(ongoingGame.getId(), 1, 1, 1);
 
             assertArrayEquals(new String[][] { { "O", "", "" }, { "", "", "" }, { "", "", "" } },
-                    resultedGame.getBoard());
+                    resultedGame.board());
         }
     }
 
@@ -77,7 +77,7 @@ public class GameControllerTests {
             GameController controller = new GameController(repository);
             GameRepresentation resultedGame = controller.retrieveExistingGame(ongoingGame.getId());
 
-            assertEquals(ongoingGame.getId(), resultedGame.getId());
+            assertEquals(ongoingGame.getId(), resultedGame.gameId());
         }
     }
 }

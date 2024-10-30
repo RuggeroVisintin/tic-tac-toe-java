@@ -13,6 +13,6 @@ public class MakeAMoveUseCase {
         currentGame.nextMove(new Player(move.playerId()), move.getX(), move.getY());
         repository.save(currentGame);
 
-        return new GameRepresentation(currentGame);
+        return GameRepresentation.fromGame(currentGame);
     }
 }

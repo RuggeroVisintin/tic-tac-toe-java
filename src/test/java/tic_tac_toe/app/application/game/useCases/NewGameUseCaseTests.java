@@ -30,7 +30,7 @@ class NewGameUseCaseTests {
         GameRepresentation newGame2 = new NewGameUseCase()
                 .execute(gameRepo);
 
-        assertNotEquals(newGame.getId(), newGame2.getId());
+        assertNotEquals(newGame.gameId(), newGame2.gameId());
     }
 
     @Test
@@ -40,8 +40,8 @@ class NewGameUseCaseTests {
         GameRepresentation result = new NewGameUseCase()
                 .execute(gameRepo);
 
-        GameRepresentation expected = new GameRepresentation(gameRepo.savedGame);
+        GameRepresentation expected = GameRepresentation.fromGame(gameRepo.savedGame);
 
-        assertEquals(expected.getId(), result.getId());
+        assertEquals(expected.gameId(), result.gameId());
     }
 }

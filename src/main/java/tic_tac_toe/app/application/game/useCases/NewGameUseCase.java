@@ -10,6 +10,6 @@ public class NewGameUseCase {
 
         repository.save(newGame);
 
-        return new GameRepresentation(newGame);
+        return GameRepresentation.fromGame(newGame);
     }
 }
