@@ -60,7 +60,7 @@ public class InMemoryGameRepositoryTests {
     class SaveGameTests {
 
         @Test
-        void itShouldPersistAGameState() {
+        void itShouldPersistANewGameState() {
             Game newGame = new Game();
 
             InMemoryGameRepository repository = new InMemoryGameRepository();
@@ -69,6 +69,19 @@ public class InMemoryGameRepositoryTests {
             Game foundGame = repository.findById(newGame.getId());
 
             assertEquals(newGame, foundGame);
+        }
+
+        @Test
+        void itShouldUpdateAnExistingGameState() {
+            Game newGame = new Game();
+
+            InMemoryGameRepository repository = new InMemoryGameRepository();
+            repository.save(newGame);
+
+            newGame.nextMove(new Move(new Player(1), 1, 1));
+            repository.save(newGame);
+
+            assertEquals(newGame, repository.findById(newGame.getId()));
         }
     }
 }

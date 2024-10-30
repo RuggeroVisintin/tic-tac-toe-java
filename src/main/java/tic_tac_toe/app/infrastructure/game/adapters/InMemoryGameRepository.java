@@ -18,6 +18,13 @@ public class InMemoryGameRepository implements GameRepository {
     }
 
     public void save(Game game) {
+        for (int i = 0; i < mGames.size(); i++) {
+            if (game.getId().equals(mGames.get(i).getId())) {
+                mGames.set(i, game.clone());
+                return;
+            }
+        }
+
         mGames.add(game.clone());
     }
 
