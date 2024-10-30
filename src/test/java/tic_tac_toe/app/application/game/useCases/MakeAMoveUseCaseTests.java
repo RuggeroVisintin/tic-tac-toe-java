@@ -10,6 +10,7 @@ import tic_tac_toe.app.application.game.BaseFakeGameRepository;
 import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.application.game.representation.MoveRepresentation;
 import tic_tac_toe.app.domain.game.models.Game;
+import tic_tac_toe.app.domain.game.models.Move;
 import tic_tac_toe.app.domain.game.models.Player;
 
 public class MakeAMoveUseCaseTests {
@@ -37,7 +38,7 @@ public class MakeAMoveUseCaseTests {
         GameRepresentation updatedGame = useCase.execute(new MoveRepresentation(newGame.getId(), 1,
                 1, 1), gameRepository);
 
-        newGame.nextMove(new Player(1), 1, 1);
+        newGame.nextMove(new Move(new Player(1), 1, 1));
         assertArrayEquals(newGame.getBoard(), updatedGame.board());
     }
 
@@ -52,7 +53,7 @@ public class MakeAMoveUseCaseTests {
         useCase.execute(new MoveRepresentation(gameRepository.savedGame.getId(), 1,
                 1, 1), gameRepository);
 
-        expectedResult.nextMove(new Player(1), 1, 1);
+        expectedResult.nextMove(new Move(new Player(1), 1, 1));
         assertArrayEquals(expectedResult.getBoard(), gameRepository.savedGame.getBoard());
     }
 }

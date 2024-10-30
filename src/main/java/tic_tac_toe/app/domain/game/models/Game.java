@@ -71,9 +71,7 @@ public class Game implements Cloneable {
         return result;
     }
 
-    public void nextMove(Player player, int x, int y) throws InvalidMoveException, InvalidPlayerException {
-        Move move = new Move(player, x, y);
-
+    public void nextMove(Move move) throws InvalidMoveException, InvalidPlayerException {
         if (this.mWinner != null || this.mMovesCount == 9) {
             throw new InvalidMoveException("Cannot make new moves on a finished game");
         }

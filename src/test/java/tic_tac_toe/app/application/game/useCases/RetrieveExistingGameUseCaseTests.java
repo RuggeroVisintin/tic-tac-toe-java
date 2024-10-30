@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import tic_tac_toe.app.application.game.BaseFakeGameRepository;
 import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.domain.game.models.Game;
+import tic_tac_toe.app.domain.game.models.Move;
 import tic_tac_toe.app.domain.game.models.Player;
 
 public class RetrieveExistingGameUseCaseTests {
@@ -30,7 +31,7 @@ public class RetrieveExistingGameUseCaseTests {
     void itShouldRetrieveAnExistingGameStatus() throws Exception {
         FakeGameRepository gameRepository = new FakeGameRepository();
         gameRepository.savedGame = new Game();
-        gameRepository.savedGame.nextMove(new Player(1), 1, 1);
+        gameRepository.savedGame.nextMove(new Move(new Player(1), 1, 1));
 
         GameRepresentation retrievedGame = (new RetrieveExistingGameUseCase().execute(gameRepository.savedGame.getId(),
                 gameRepository));
