@@ -171,7 +171,7 @@ class GameTests {
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameColumn() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstRow());
-            game.nextMove(new Move(new Player(0), new XCoordinate(1), new YCoordinate(3)));
+            game.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(1)));
 
             assertEquals(new Player(0), game.getWinner());
         }
