@@ -11,6 +11,8 @@ import tic_tac_toe.app.application.game.representation.GameRepresentation;
 import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.models.Move;
 import tic_tac_toe.app.domain.game.models.Player;
+import tic_tac_toe.app.domain.game.models.coordinate.XCoordinate;
+import tic_tac_toe.app.domain.game.models.coordinate.YCoordinate;
 
 public class RetrieveExistingGameUseCaseTests {
     protected class FakeGameRepository extends BaseFakeGameRepository {
@@ -31,7 +33,7 @@ public class RetrieveExistingGameUseCaseTests {
     void itShouldRetrieveAnExistingGameStatus() throws Exception {
         FakeGameRepository gameRepository = new FakeGameRepository();
         gameRepository.savedGame = new Game();
-        gameRepository.savedGame.nextMove(new Move(new Player(1), 1, 1));
+        gameRepository.savedGame.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
         GameRepresentation retrievedGame = (new RetrieveExistingGameUseCase().execute(gameRepository.savedGame.getId(),
                 gameRepository));

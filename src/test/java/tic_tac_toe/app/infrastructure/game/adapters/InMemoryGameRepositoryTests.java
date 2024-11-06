@@ -14,6 +14,8 @@ import tic_tac_toe.app.domain.game.models.Game;
 import tic_tac_toe.app.domain.game.models.GameNotFoundException;
 import tic_tac_toe.app.domain.game.models.Move;
 import tic_tac_toe.app.domain.game.models.Player;
+import tic_tac_toe.app.domain.game.models.coordinate.XCoordinate;
+import tic_tac_toe.app.domain.game.models.coordinate.YCoordinate;
 
 public class InMemoryGameRepositoryTests {
 
@@ -50,7 +52,7 @@ public class InMemoryGameRepositoryTests {
 
             Game savedGame = repository.findById(newGame.getId());
 
-            savedGame.nextMove(new Move(new Player(1), 1, 1));
+            savedGame.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
             assertNotEquals(savedGame, repository.findById(newGame.getId()));
         }
@@ -78,7 +80,7 @@ public class InMemoryGameRepositoryTests {
             InMemoryGameRepository repository = new InMemoryGameRepository();
             repository.save(newGame);
 
-            newGame.nextMove(new Move(new Player(1), 1, 1));
+            newGame.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
             repository.save(newGame);
 
             assertEquals(newGame, repository.findById(newGame.getId()));

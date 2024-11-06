@@ -80,12 +80,12 @@ public class Game implements Cloneable {
             throw new InvalidMoveException("The same player cannot move more than once in a row");
         }
 
-        if (mBoard[move.y() - 1][move.x() - 1] != "") {
+        if (mBoard[move.y().value() - 1][move.x().value() - 1] != "") {
             throw new InvalidMoveException(
                     "Cell [" + move.x() + ", " + move.y() + "] is already taken. Choose another cell");
         }
 
-        mBoard[move.y() - 1][move.x() - 1] = mPlayerSymbolsMap[move.player().playerId()];
+        mBoard[move.y().value() - 1][move.x().value() - 1] = mPlayerSymbolsMap[move.player().playerId()];
         mLastPlayerToMove = move.player();
         mMovesCount++;
 

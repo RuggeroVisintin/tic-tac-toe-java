@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import tic_tac_toe.app.domain.game.BoardFixtures;
+import tic_tac_toe.app.domain.game.models.coordinate.XCoordinate;
+import tic_tac_toe.app.domain.game.models.coordinate.YCoordinate;
 
 class GameTests {
     protected Game game;
@@ -77,7 +79,7 @@ class GameTests {
 
         @Test
         void itShouldRegisterTheMoveInTheGameBoard() throws Exception {
-            game.nextMove(new Move(new Player(1), 3, 2));
+            game.nextMove(new Move(new Player(1), new XCoordinate(3), new YCoordinate(2)));
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -88,7 +90,7 @@ class GameTests {
 
         @Test
         void itShouldResisterXOnTheBoardWhenPlayer0Moves() throws Exception {
-            game.nextMove(new Move(new Player(0), 3, 2));
+            game.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(2)));
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -99,7 +101,7 @@ class GameTests {
 
         @Test
         void itShouldResisterOOnTheBoardWhenPlayer0Moves() throws Exception {
-            game.nextMove(new Move(new Player(1), 3, 2));
+            game.nextMove(new Move(new Player(1), new XCoordinate(3), new YCoordinate(2)));
 
             assertArrayEquals(new String[][] {
                     { "", "", "" },
@@ -110,23 +112,26 @@ class GameTests {
 
         @Test
         void itShouldThrowIfTheSamePlayerMovesMoreThanOnceInARow() throws Exception {
-            game.nextMove(new Move(new Player(1), 1, 1));
+            game.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(1), 2, 1)));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(1),
+                    new XCoordinate(2), new YCoordinate(1))));
             assertEquals("The same player cannot move more than once in a row", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfAPlayerTargetsACellThatIsAlreadyTaken() throws Exception {
-            game.nextMove(new Move(new Player(1), 1, 1));
+            game.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0), 1, 1)));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0),
+                    new XCoordinate(1), new YCoordinate(1))));
             assertEquals("Cell [1, 1] is already taken. Choose another cell", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfPlayerIsNotValid() throws Exception {
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(2), 1, 1)));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(2),
+                    new XCoordinate(1), new YCoordinate(1))));
             assertEquals("PlayerId 2 is not valid. Use either 0 or 1", exception.getMessage());
         }
 
@@ -134,28 +139,30 @@ class GameTests {
         void itShouldThrowIfTheGameIsAlreadyOverWithAWin() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
-            game.nextMove(new Move(new Player(1), 3, 3));
+            game.nextMove(new Move(new Player(1), new XCoordinate(3), new YCoordinate(3)));
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0), 3, 2)));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0),
+                    new XCoordinate(3), new YCoordinate(2))));
             assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
         void itShouldThrowIfTheGameIsAlreadyOverWithADraft() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            game.nextMove(new Move(new Player(0), 3, 3));
+            game.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(3)));
 
-            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0), 3, 2)));
+            Exception exception = assertThrows(Exception.class, () -> game.nextMove(new Move(new Player(0),
+                    new XCoordinate(3), new YCoordinate(2))));
             assertEquals("Cannot make new moves on a finished game", exception.getMessage());
         }
 
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameDiagonal() throws Exception {
             Game oWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
-            oWinsGame.nextMove(new Move(new Player(1), 3, 3));
+            oWinsGame.nextMove(new Move(new Player(1), new XCoordinate(3), new YCoordinate(3)));
 
             Game xWinsGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal(0));
-            xWinsGame.nextMove(new Move(new Player(0), 3, 3));
+            xWinsGame.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(3)));
 
             assertEquals(new Player(1), oWinsGame.getWinner());
             assertEquals(new Player(0), xWinsGame.getWinner());
@@ -164,7 +171,7 @@ class GameTests {
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymbolsAlignOnTheSameColumn() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstRow());
-            game.nextMove(new Move(new Player(0), 3, 1));
+            game.nextMove(new Move(new Player(0), new XCoordinate(1), new YCoordinate(3)));
 
             assertEquals(new Player(0), game.getWinner());
         }
@@ -172,7 +179,7 @@ class GameTests {
         @Test
         void itShouldComputeTheWinningPlayerWhenThreeSymoblsAlignOnTheSameColumn() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnFirstColumn());
-            game.nextMove(new Move(new Player(0), 1, 3));
+            game.nextMove(new Move(new Player(0), new XCoordinate(1), new YCoordinate(3)));
 
             assertEquals(new Player(0), game.getWinner());
         }
@@ -180,7 +187,7 @@ class GameTests {
         @Test
         void itShouldDrawADraftWhenNoPlayerHasWon() throws Exception {
             Game game = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            game.nextMove(new Move(new Player(0), 3, 3));
+            game.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(3)));
 
             assertEquals(null, game.getWinner());
         }
@@ -191,7 +198,7 @@ class GameTests {
         @Test
         void itShouldReturnTrueIfTheGameEndedWithADraft() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.draftOnBottomRightCorner());
-            newGame.nextMove(new Move(new Player(0), 3, 3));
+            newGame.nextMove(new Move(new Player(0), new XCoordinate(3), new YCoordinate(3)));
 
             assertEquals(true, newGame.isDraft());
         }
@@ -207,7 +214,7 @@ class GameTests {
         void itShouldReturnFalseIfTheGameEndedWithAWin() throws Exception {
             Game newGame = Game.fromBoardSnapshot(BoardFixtures.moveToWinOnTopLeftToBottomRightDiagonal());
 
-            newGame.nextMove(new Move(new Player(1), 3, 3));
+            newGame.nextMove(new Move(new Player(1), new XCoordinate(3), new YCoordinate(3)));
             assertEquals(false, newGame.isDraft());
         }
     }
@@ -219,7 +226,7 @@ class GameTests {
             Game originalGame = new Game();
             Game gameClone = originalGame.clone();
 
-            originalGame.nextMove(new Move(new Player(1), 1, 1));
+            originalGame.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
             assertNotEquals(originalGame, gameClone);
         }
@@ -247,7 +254,7 @@ class GameTests {
         void itShouldReturnFalseIfTheStatesDontMatch() throws Exception {
             Game newGame = new Game();
             Game gameCopy = newGame.clone();
-            gameCopy.nextMove(new Move(new Player(1), 1, 1));
+            gameCopy.nextMove(new Move(new Player(1), new XCoordinate(1), new YCoordinate(1)));
 
             assertFalse(newGame.equals(gameCopy));
         }
