@@ -82,7 +82,7 @@ public class Game implements Cloneable {
 
         if (mBoard[move.y().value() - 1][move.x().value() - 1] != "") {
             throw new InvalidMoveException(
-                    "Cell [" + move.x() + ", " + move.y() + "] is already taken. Choose another cell");
+                    "Cell [" + move.x().value() + ", " + move.y().value() + "] is already taken. Choose another cell");
         }
 
         mBoard[move.y().value() - 1][move.x().value() - 1] = mPlayerSymbolsMap[move.player().playerId()];
